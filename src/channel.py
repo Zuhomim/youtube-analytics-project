@@ -17,6 +17,31 @@ class Channel:
         self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
         self.view_count = channel["statistics"]["viewCount"]
         self.subscriber_count = channel["statistics"]["subscriberCount"]
+        self.subscriber_count_int = int(self.subscriber_count)
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        return self.subscriber_count_int + other.subscriber_count_int
+
+    def __sub__(self, other):
+        return self.subscriber_count_int - other.subscriber_count_int
+
+    def __gt__(self, other):
+        return self.subscriber_count_int > other.subscriber_count_int
+
+    def __ge__(self, other):
+        return self.subscriber_count_int >= other.subscriber_count_int
+
+    def __lt__(self, other):
+        return self.subscriber_count_int < other.subscriber_count_int
+
+    def __le__(self, other):
+        return self.subscriber_count_int <= other.subscriber_count_int
+
+    def __eq__(self, other):
+        return self.subscriber_count_int == other.subscriber_count_int
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале в виде JSON с отступом (indent = 2)"""
