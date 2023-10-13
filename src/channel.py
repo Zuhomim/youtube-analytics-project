@@ -23,25 +23,46 @@ class Channel:
         return f'{self.title} ({self.url})'
 
     def __add__(self, other):
-        return self.subscriber_count_int + other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Складывать можно только два объекта Channel.')
+        else:
+            return self.subscriber_count_int + other.subscriber_count_int
 
     def __sub__(self, other):
-        return self.subscriber_count_int - other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Вычислять разницу можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int - other.subscriber_count_int
 
     def __gt__(self, other):
-        return self.subscriber_count_int > other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Проверять сравнение gt можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int > other.subscriber_count_int
 
     def __ge__(self, other):
-        return self.subscriber_count_int >= other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Проверять сравнение ge можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int >= other.subscriber_count_int
 
     def __lt__(self, other):
-        return self.subscriber_count_int < other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Проверять сравнение lt можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int < other.subscriber_count_int
 
     def __le__(self, other):
-        return self.subscriber_count_int <= other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Проверять сравнение le можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int <= other.subscriber_count_int
 
     def __eq__(self, other):
-        return self.subscriber_count_int == other.subscriber_count_int
+        if not isinstance(other, Channel):
+            raise ValueError('Проверять равенство можно только для двух объектов Channel.')
+        else:
+            return self.subscriber_count_int == other.subscriber_count_int
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале в виде JSON с отступом (indent = 2)"""
