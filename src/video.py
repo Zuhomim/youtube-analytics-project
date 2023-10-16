@@ -1,15 +1,15 @@
-from src.constants import youtube
+from src.apimixin import APIMixin
 import json
 
 
-class Video:
+class Video(APIMixin):
     """Класс для видео на Youtube"""
 
     def __init__(self, video_id: str) -> None:
         self.video_id = video_id
-        video_json = json.dumps(youtube.videos().list(part='snippet,statistics,contentDetails,topicDetails',
-                                                      id=video_id
-                                                      ).execute())
+        video_json = json.dumps(self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                                 id=video_id
+                                                                 ).execute())
         video = json.loads(video_json)["items"][0]
         self.video_title = video['snippet']['title']
         self.view_count = video['statistics']['viewCount']
