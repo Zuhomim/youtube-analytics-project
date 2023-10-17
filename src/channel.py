@@ -1,15 +1,17 @@
 import json
-from src.constants import youtube
+
+from src.apimixin import APIMixin
 
 
-class Channel:
+class Channel(APIMixin):
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
-        channel_json = json.dumps(youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute(),
-                                  indent=2)
+        channel_json = json.dumps(
+            self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute(),
+            indent=2)
         channel = json.loads(channel_json)["items"][0]
         self.description = channel["snippet"]["description"]
         self.title = channel["snippet"]["title"]
@@ -67,8 +69,9 @@ class Channel:
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале в виде JSON с отступом (indent = 2)"""
 
-        channel = json.dumps(youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute(),
-                             indent=2)
+        channel = json.dumps(
+            self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute(),
+            indent=2)
         print(channel)
 
     @property
@@ -76,12 +79,6 @@ class Channel:
         """геттер атрибута channel_id"""
 
         return self.__channel_id
-
-    @classmethod
-    def get_service(cls):
-        """возвращает объект для работы с Youtube API"""
-
-        return youtube
 
     def to_json(self, json_path):
         """записывает объект с channel_info в файл json"""
@@ -95,6 +92,5 @@ class Channel:
             "video_count": self.video_count,
             "view_count": self.view_count
         }
-        print(channel_info)
         with open(json_path, 'w') as data_json:
             data_json.write(json.dumps(channel_info, indent=4, ensure_ascii=False))
