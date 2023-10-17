@@ -80,17 +80,6 @@ class Channel(APIMixin):
 
         return self.__channel_id
 
-    @classmethod
-    def get_service(cls):
-        """возвращает объект для работы с Youtube API"""
-
-        # API-key из переменных окружения
-        api_key: str = os.getenv('YOUTUBE_API_KEY')
-        # Объект для работы с Youtube
-        youtube = build('youtube', 'v3', developerKey=api_key)
-
-        return youtube
-
     def to_json(self, json_path):
         """записывает объект с channel_info в файл json"""
 
