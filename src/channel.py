@@ -1,16 +1,18 @@
 import json
-import os
-from googleapiclient.discovery import build
+
+from src.apimixin import APIMixin
 
 
-class Channel:
+class Channel(APIMixin):
     """Класс для ютуб-канала"""
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
         self.__channel_id = channel_id
+
         channel = (self.get_service().channels().list(id=channel_id, part='snippet,statistics')
                    .execute())["items"][0]
+
         self.description = channel["snippet"]["description"]
         self.title = channel["snippet"]["title"]
         self.video_count = channel["statistics"]["videoCount"]
